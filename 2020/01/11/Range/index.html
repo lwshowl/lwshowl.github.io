@@ -15,10 +15,12 @@
 <meta property="og:site_name" content="xyxy&#39;s liitle home">
 <meta property="og:description" content="For循环 I经典for循环：  for(int i&#x3D;0;i&lt;length;i++)   大多数人对这段代码可能再熟悉不过了……,简单粗暴而又高效，以至于找不到任何能优化他的方法。   特点：  结构清晰,易于控制.  简单而又灵活  注重迭代过程 你可能难以想象只用for语句能做多少事情，网上有许多使用经典for语句 :stuck_out_tongue_closed_eyes:，for的原">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/01/11/BlogSource/RangeBasedForLoop/CreelRange.png">
 <meta property="article:published_time" content="2020-01-11T10:47:12.000Z">
-<meta property="article:modified_time" content="2020-01-14T07:20:33.253Z">
+<meta property="article:modified_time" content="2020-01-14T07:26:16.720Z">
 <meta property="article:author" content="xyxy">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/11/BlogSource/RangeBasedForLoop/CreelRange.png">
   
     <link rel="alternative" href="/atom.xml" title="xyxy&#39;s liitle home" type="application/atom+xml">
   
@@ -205,21 +207,76 @@
 <p>   <code>for i in range(1,10)</code>     /* 从1迭代到小于10 ，自增1*/ </p>
 <p>   <code>for i in range(1,10,2)</code>  /* 从1跌迭代到小于10，自增2 */</p>
 <p>   这种写法省略了迭代的具体过程，但突出了<code>for</code>的最主要的功能，迭代范围和自增的数量，事实上，很多人已经自己在C++ 上实现并使用这些功能了，参阅了一些人的改动后，也可以自己来实现以下。</p>
-<h2 id="C-11-Range-Based-For-Loop"><a href="#C-11-Range-Based-For-Loop" class="headerlink" title="C++11 Range Based For Loop"></a>C++11 Range Based For Loop</h2><pre><code>`for(auto(&amp;) i:collection E)` 
+<hr>
+<h2 id="C-11-Range-Based-For-Loop"><a href="#C-11-Range-Based-For-Loop" class="headerlink" title="C++11 Range Based For Loop"></a>C++11 Range Based For Loop</h2><p> <code>for(auto(&amp;) i:collection E)</code></p>
+<p>Range Based For Loop(以下简称RBFL)功能是依次访问集合E中的每一个元素<br>i便是集合E中的元素的拷贝(引用)，</p>
+<p>但是只能对一个已存在的数据集合进行迭代，于是很多人自己封装了一些类来实现单纯在数字上的迭代。但是有许多方法可以让我们接近于Python 的语法。</p>
+<p>以下是来自What’s a creel 实现的Range类，</p>
+<p><img src="../BlogSource/RangeBasedForLoop/CreelRange.png" alt="CreelRange" title="CreelRange"></p>
+<p>可以看到实际上非常有效，而且基本上和Python 一样简便，但是Creel 把Range 的迭代器和Range类写在一起，十分难以理解，所以我自己用两个类魔方写出了同样的代码，以下贴出源码：</p>
+<pre><code>File:Range.h
+```
+#pragma once
+  namespace creel
+  {
+  class RangeIterator
+  {
+  private:
+     int pos;
 
-Range Based For Loop(以下简称RBFL)功能是依次访问集合E中的每一个元素
-i便是集合E中的元素的拷贝(引用)，
+  public:
+     RangeIterator(int pos)
+     {
+    this-&gt;pos = pos;
+     }
+     friend bool operator!=(RangeIterator lhs, RangeIterator rhs);
+     RangeIterator operator++();
+     int operator*();
+  };
 
-但是只能对一个已存在的数据集合进行迭代，于是很多人自己封装了一些类来实现单纯在数字上的迭代。但是有许多方法可以让我们接近于Python 的语法。
+  RangeIterator RangeIterator::
+  operator++()
+  {
+     pos++;
+     return RangeIterator(pos);
+  }
 
-以下是来自What&apos;s a creel 实现的Range类，
+  bool operator!=(RangeIterator lhs, RangeIterator rhs)
+  {
+     return lhs.pos != rhs.pos;
+  }
 
-![CreelRange](../BlogSource/RangeBasedForLoop/CreelRange.png &quot;CreelRange&quot;)
+  int RangeIterator::operator*()
+  {
+     return pos;
+  }
 
-可以看到实际上非常有效，而且基本上和Python 一样简便，但是Creel 把Range 的迭代器和Range类写在一起，十分难以理解，所以我自己用两个类魔方写出了同样的代码，以下贴出源码：
+  class Range
+  {
+  private:
+  int startPos;
+  int endPos;
+  int currentPos;
+  RangeIterator it;
 
-File:Range.h
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"> #pragma once</span><br><span class="line">   namespace creel</span><br><span class="line">   &#123;</span><br><span class="line">      class RangeIterator</span><br><span class="line">   &#123;</span><br><span class="line">   private:</span><br><span class="line">      int pos;</span><br><span class="line"></span><br><span class="line">   public:</span><br><span class="line">      RangeIterator(int pos)</span><br><span class="line">      &#123;</span><br><span class="line">     this-&gt;pos &#x3D; pos;</span><br><span class="line">      &#125;</span><br><span class="line">      friend bool operator!&#x3D;(RangeIterator lhs, RangeIterator rhs);</span><br><span class="line">      RangeIterator operator++();</span><br><span class="line">      int operator*();</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   RangeIterator RangeIterator::</span><br><span class="line">   operator++()</span><br><span class="line">   &#123;</span><br><span class="line">      pos++;</span><br><span class="line">      return RangeIterator(pos);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   bool operator!&#x3D;(RangeIterator lhs, RangeIterator rhs)</span><br><span class="line">   &#123;</span><br><span class="line">      return lhs.pos !&#x3D; rhs.pos;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   int RangeIterator::operator*()</span><br><span class="line">   &#123;</span><br><span class="line">      return pos;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">class Range</span><br><span class="line">&#123;</span><br><span class="line">   private:</span><br><span class="line">   int startPos;</span><br><span class="line">   int endPos;</span><br><span class="line">   int currentPos;</span><br><span class="line">   RangeIterator it;</span><br><span class="line"></span><br><span class="line">   public:</span><br><span class="line">   Range(int startPos, int endPos):       startPos(startPos),</span><br><span class="line">   endPos(endPos), it(currentPos)&#123;&#125;;</span><br><span class="line"> </span><br><span class="line">   RangeIterator begin();</span><br><span class="line">   RangeIterator end();</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   RangeIterator Range::begin()</span><br><span class="line">   &#123;</span><br><span class="line">   return RangeIterator(startPos);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   RangeIterator Range::end()</span><br><span class="line">   &#123;</span><br><span class="line">   return RangeIterator(endPos);</span><br><span class="line">   &#125;</span><br><span class="line">   &#125; &#x2F;&#x2F; namespace creel</span><br></pre></td></tr></table></figure></code></pre><p>   由于篇幅问题，我准备把以上源码的思路放在下一篇文章，并且让Range 可以调整他的自增的大小，本文到此结束…………</p>
+  public:
+  Range(int startPos, int endPos):       startPos(startPos),
+  endPos(endPos), it(currentPos){};
+
+  RangeIterator begin();
+  RangeIterator end();
+  };
+
+  RangeIterator Range::begin()
+  {
+  return RangeIterator(startPos);
+  }
+
+  RangeIterator Range::end()
+  {
+  return RangeIterator(endPos);
+  }
+  } // namespace creel</code></pre><p>   由于篇幅问题，我准备把以上源码的思路放在下一篇文章，并且让Range 可以调整他的自增的大小，本文到此结束…………</p>
 
       
 
