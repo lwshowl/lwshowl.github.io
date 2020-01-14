@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>For循环 I | xyxy&#39;s liitle home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="For循环 I经典for循环：  for(int i&#x3D;0;i&lt;length;i++)   大多数人对这段代码可能再熟悉不过了……,简单粗暴而又高效，以至于找不到任何能优化他的方法。   特点：  结构清晰,易于控制.  简单而又灵活  注重迭代过程 你可能难以想象只用for语句能做多少事情，网上有许多使用经典for语句 :stuck_out_tongue_closed_eyes:，for的原">
+  <meta name="description" content="For循环 I经典for循环：  for(int i&#x3D;0;i&lt;length;i++)   大多数人对这段代码可能再熟悉不过了……,简单粗暴而又高效，以至于找不到任何能优化他的方法。   特点：  结构清晰,易于控制.  简单而又灵活  注重迭代过程 你可能难以想象只用for语句能做多少事情，网上有许多使用经典for语句的挑战，手动滑稽，for的原型如下： 12for(初始化;判断条件;最终行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="For循环 I">
 <meta property="og:url" content="http://yoursite.com/2020/01/11/Range/index.html">
 <meta property="og:site_name" content="xyxy&#39;s liitle home">
-<meta property="og:description" content="For循环 I经典for循环：  for(int i&#x3D;0;i&lt;length;i++)   大多数人对这段代码可能再熟悉不过了……,简单粗暴而又高效，以至于找不到任何能优化他的方法。   特点：  结构清晰,易于控制.  简单而又灵活  注重迭代过程 你可能难以想象只用for语句能做多少事情，网上有许多使用经典for语句 :stuck_out_tongue_closed_eyes:，for的原">
+<meta property="og:description" content="For循环 I经典for循环：  for(int i&#x3D;0;i&lt;length;i++)   大多数人对这段代码可能再熟悉不过了……,简单粗暴而又高效，以至于找不到任何能优化他的方法。   特点：  结构清晰,易于控制.  简单而又灵活  注重迭代过程 你可能难以想象只用for语句能做多少事情，网上有许多使用经典for语句的挑战，手动滑稽，for的原型如下： 12for(初始化;判断条件;最终行">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/01/11/BlogSource/RangeBasedForLoop/CreelRange.png">
 <meta property="article:published_time" content="2020-01-11T10:47:12.000Z">
-<meta property="article:modified_time" content="2020-01-14T07:26:16.720Z">
+<meta property="article:modified_time" content="2020-01-14T07:29:57.342Z">
 <meta property="article:author" content="xyxy">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/01/11/BlogSource/RangeBasedForLoop/CreelRange.png">
@@ -63,7 +63,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+				<li><a href="/">随笔</a></li>
 	        
 			</ul>
 		</nav>
@@ -141,7 +141,7 @@
 				
 					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 50%"><a href="/">随笔</a></li>
 		        
 				</ul>
 			</nav>
@@ -185,7 +185,7 @@
 <li><p>简单而又灵活</p>
 </li>
 <li><p>注重迭代过程</p>
-<p>你可能难以想象只用<code>for</code>语句能做多少事情，网上有许多使用经典<code>for</code>语句 :stuck_out_tongue_closed_eyes:，<code>for</code>的原型如下：</p>
+<p>你可能难以想象只用<code>for</code>语句能做多少事情，网上有许多使用经典<code>for</code>语句的挑战，手动滑稽，<code>for</code>的原型如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for(初始化;判断条件;最终行为)</span><br><span class="line">   &#x2F;&#x2F;你要做的事</span><br></pre></td></tr></table></figure>
 <p>以上三个部分可以使用C++ 任何合法的语句……</p>
 <p>但是我在使用<code>for</code>的过程中，总是会遇到各种困惑，事实上我写代码的时候有一半时间是在想这些问题：</p>
@@ -276,7 +276,7 @@
   {
   return RangeIterator(endPos);
   }
-  } // namespace creel</code></pre><p>   由于篇幅问题，我准备把以上源码的思路放在下一篇文章，并且让Range 可以调整他的自增的大小，本文到此结束…………</p>
+  } // namespace creel</code></pre><p>   代码本身并不复杂，主要涉及RBFL的原型，和迭代器的相关实现方式。<br>   由于篇幅问题，我准备把以上源码的思路放在下一篇文章，并且让Range 可以调整他的自增的大小，本文到此结束…………</p>
 
       
 
@@ -370,11 +370,15 @@
   
 <nav id="article-nav">
   
-  
-    <a href="/2020/01/11/firstPSG/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">创建了Hexo  Blog</div>
-      <i class="icon-circle-right"></i>
+    <a href="/2020/01/11/firstPSG/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          创建了Hexo  Blog
+        
+      </div>
     </a>
+  
   
 </nav>
 
@@ -398,9 +402,50 @@
 
 
   
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Range" data-title="For循环 I" data-url="http://yoursite.com/2020/01/11/Range/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
+  
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "http://yoursite.com/2020/01/11/Range/", 
+    sourceId: "Range",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
+  
+  <div id="SOHUCS" sid="Range" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "true",
+        conf: "true"
+    });
+</script>
+</script>
   
 
   
