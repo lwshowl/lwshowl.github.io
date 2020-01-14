@@ -152,6 +152,72 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Range" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/14/Range/">For循环 I</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/14/Range/" class="archive-article-date">
+  	<time datetime="2020-01-14T07:38:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="经典for循环："><a href="#经典for循环：" class="headerlink" title="经典for循环："></a>经典<code>for</code>循环：</h2><p>  <code>for(int i=0;i&lt;length;i++)</code></p>
+<p>  大多数人对这段代码可能再熟悉不过了……,简单粗暴而又高效，以至于找不到任何能优化他的方法。</p>
+        
+          <a class="article-more-a" href="/2020/01/14/Range/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/14/Range/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-firstPSG" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -186,169 +252,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/01/11/firstPSG/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Range" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/11/Range/">For循环 I</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/11/Range/" class="archive-article-date">
-  	<time datetime="2020-01-11T10:47:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="For循环-I"><a href="#For循环-I" class="headerlink" title="For循环 I"></a>For循环 I</h1><h2 id="经典for循环："><a href="#经典for循环：" class="headerlink" title="经典for循环："></a>经典<code>for</code>循环：</h2><p>  <code>for(int i=0;i&lt;length;i++)</code></p>
-<p>  大多数人对这段代码可能再熟悉不过了……,简单粗暴而又高效，以至于找不到任何能优化他的方法。</p>
-<p>  <strong>特点：</strong></p>
-<ul>
-<li><p>结构清晰,易于控制.</p>
-</li>
-<li><p>简单而又灵活</p>
-</li>
-<li><p>注重迭代过程</p>
-<p>你可能难以想象只用<code>for</code>语句能做多少事情，网上有许多使用经典<code>for</code>语句的挑战，手动滑稽，<code>for</code>的原型如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for(初始化;判断条件;最终行为)</span><br><span class="line">   &#x2F;&#x2F;你要做的事</span><br></pre></td></tr></table></figure>
-<p>以上三个部分可以使用C++ 任何合法的语句……</p>
-<p>但是我在使用<code>for</code>的过程中，总是会遇到各种困惑，事实上我写代码的时候有一半时间是在想这些问题：</p>
-</li>
-</ul>
-<p>  <strong>你也可能遇到的问题：</strong></p>
-<ul>
-<li><p>应不应该加等号，数组上下界问题</p>
-</li>
-<li><p>我究竟会走到哪一步</p>
-</li>
-<li><p>i++究竟应该写在什么位置</p>
-<p>于是到最后代码写到最后就是解决以上问题……，我甚至可以记下那些英文是什么……例如：</p>
-</li>
-</ul>
-<p>   <em>fatal error: array subscript out of range</em></p>
-<p>   <em>memory access violation</em></p>
-<p>   由于<code>for loop</code>并不直观的体现他所迭代的范围，也正是他灵活的地方，但却让代码变得过于注重每一个细节……，不像python此类的简洁而依然有效的写法</p>
-<p>   <code>for i in range(1,10)</code>     /* 从1迭代到小于10 ，自增1*/ </p>
-<p>   <code>for i in range(1,10,2)</code>  /* 从1跌迭代到小于10，自增2 */</p>
-<p>   这种写法省略了迭代的具体过程，但突出了<code>for</code>的最主要的功能，迭代范围和自增的数量，事实上，很多人已经自己在C++ 上实现并使用这些功能了，参阅了一些人的改动后，也可以自己来实现以下。</p>
-<hr>
-<h2 id="C-11-Range-Based-For-Loop"><a href="#C-11-Range-Based-For-Loop" class="headerlink" title="C++11 Range Based For Loop"></a>C++11 Range Based For Loop</h2><p> <code>for(auto(&amp;) i:collection E)</code></p>
-<p>Range Based For Loop(以下简称RBFL)功能是依次访问集合E中的每一个元素<br>i便是集合E中的元素的拷贝(引用)，</p>
-<p>但是只能对一个已存在的数据集合进行迭代，于是很多人自己封装了一些类来实现单纯在数字上的迭代。但是有许多方法可以让我们接近于Python 的语法。</p>
-<p>以下是来自What’s a creel 实现的Range类，</p>
-<p><img src="../BlogSource/RangeBasedForLoop/CreelRange.png" alt="CreelRange" title="CreelRange"></p>
-<p>可以看到实际上非常有效，而且基本上和Python 一样简便，但是Creel 把Range 的迭代器和Range类写在一起，十分难以理解，所以我自己用两个类魔方写出了同样的代码，以下贴出源码：</p>
-<pre><code>File:Range.h
-```
-#pragma once
-  namespace creel
-  {
-  class RangeIterator
-  {
-  private:
-     int pos;
-
-  public:
-     RangeIterator(int pos)
-     {
-    this-&gt;pos = pos;
-     }
-     friend bool operator!=(RangeIterator lhs, RangeIterator rhs);
-     RangeIterator operator++();
-     int operator*();
-  };
-
-  RangeIterator RangeIterator::
-  operator++()
-  {
-     pos++;
-     return RangeIterator(pos);
-  }
-
-  bool operator!=(RangeIterator lhs, RangeIterator rhs)
-  {
-     return lhs.pos != rhs.pos;
-  }
-
-  int RangeIterator::operator*()
-  {
-     return pos;
-  }
-
-  class Range
-  {
-  private:
-  int startPos;
-  int endPos;
-  int currentPos;
-  RangeIterator it;
-
-  public:
-  Range(int startPos, int endPos):       startPos(startPos),
-  endPos(endPos), it(currentPos){};
-
-  RangeIterator begin();
-  RangeIterator end();
-  };
-
-  RangeIterator Range::begin()
-  {
-  return RangeIterator(startPos);
-  }
-
-  RangeIterator Range::end()
-  {
-  return RangeIterator(endPos);
-  }
-  } // namespace creel</code></pre><p>   代码本身并不复杂，主要涉及RBFL的原型，和迭代器的相关实现方式。<br>   由于篇幅问题，我准备把以上源码的思路放在下一篇文章，并且让Range 可以调整他的自增的大小，本文到此结束…………</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/11/Range/">展开全文 >></a>
         </p>
       
 
