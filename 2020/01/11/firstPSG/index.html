@@ -395,6 +395,30 @@
 
 
 
+  <div id="giteement-ctn"></div>
+  
+    <link rel="stylesheet" href="/lib/default.css">
+    <script src="/lib/giteement.browser.js"></script>
+  
+  <script>
+  <!-- id: "创建了Hexo  Blog" -->
+  var giteement = new Giteement({
+    id: '20200111184712',
+    owner: '',
+    repo: '',
+    backcall_uri: '',
+    oauth_uri: 'https://cors-anywhere.herokuapp.com/https://gitee.com/oauth/token',
+    oauth: {
+      client_id: '',
+      client_secret: ''
+    },
+  })
+  giteement.render('giteement-ctn')
+  </script>
+
+
+
+
 
   
   <div id="gitment-ctn"></div>
@@ -410,8 +434,8 @@
       owner: 'lwshowl',
       repo: 'lwshowl.com',
       oauth: {
-        client_id: '0890a263e8607f2f1fde',
-        client_secret: 'b6ae0c0fb50a03913551c4adaa1a47a7d9196606',
+        client_id: '9324c805fdea3052869e',
+        client_secret: '423f61ac88dbe15e96d6fea18f7a1a69336ba23d',
       },
     })
     gitment.render('gitment-ctn')
