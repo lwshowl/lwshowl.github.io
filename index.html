@@ -208,12 +208,6 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
           
             <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a><strong>简介</strong></h3><p><a target="_blank" rel="noopener" href="https://thierrysans.me/CSCC69/projects/"><strong>Pintos</strong></a> 是 <strong>Github</strong> 上的一个操作系统开源项目，用于进行操作系统教学。适配于 <strong>i386</strong> 体系结构 <strong>CPU</strong>，可以在真实的 <strong>i386</strong> 机器上面进行引导，基础项目源码包含了引导阶段，C语言初始化阶段，<strong>CPU</strong> 初始化阶段和一个简单的调度器代码。很多课程比如 <strong>CSCC69</strong> 和 <strong>CS162</strong> 沿用了这个源于斯坦福的项目，其课程设计是补充完成 <strong>pintOS</strong> 内核，并且分为以下几个子项目</p>
-<ul>
-<li><strong>项目1 进程调度 (project 1 Threads)</strong></li>
-<li><strong>项目2 用户程序 (project 2 User Programs)</strong></li>
-<li><strong>项目3 虚拟内存 (project 3 Virtual Memory)</strong></li>
-<li><strong>项目4 文件系统 (project 4 File System)</strong></li>
-</ul>
               
                 <a class="article-more-a" href="/2022/02/09/pintos/#more">
                   more >>
@@ -276,7 +270,7 @@ var _hmt = _hmt || [];
 
         
   
-    <article id="post-pintos1"
+    <article id="post-pintos2"
   class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -284,12 +278,12 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/02/09/pintos1/">pintOS 探索之旅(2) 设置开发环境</a>
+      <a class="article-title" href="/2022/02/09/pintos2/">pintOS 探索之旅(2) 设置开发环境</a>
     </h1>
   
 
           
-            <a href="/2022/02/09/pintos1/" class="archive-article-date">
+            <a href="/2022/02/09/pintos2/" class="archive-article-date">
   	<time datetime="2022-02-09T14:52:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-09</time>
 </a>
 
@@ -301,7 +295,7 @@ var _hmt = _hmt || [];
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">114字</span>
+        <span class="post-count">331字</span>
       </span>
     </span>
 
@@ -328,12 +322,12 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
           
             <h3 id="设置-WSL"><a href="#设置-WSL" class="headerlink" title="设置 WSL"></a><strong>设置 WSL</strong></h3><p><strong>WSL</strong> 是 <strong>Windows</strong> <strong>Linux</strong> <strong>Subsystem</strong> 的简称，可以在 <strong>Windows</strong> 中运行 <strong>Linux</strong> 虚拟机。</p>
-<ol>
-<li><blockquote>
-<p>按下 <strong>Win + R</strong> 输入 <strong>PowerShell</strong> 命令</p>
+<p>1.打开 <strong>powershell</strong></p>
+<blockquote>
+<p> 按下 <strong>Win + R</strong> 输入 <strong>PowerShell</strong> 后打开</p>
 </blockquote>
               
-                <a class="article-more-a" href="/2022/02/09/pintos1/#more">
+                <a class="article-more-a" href="/2022/02/09/pintos2/#more">
                   more >>
                 </a>
                 
@@ -363,7 +357,123 @@ var _hmt = _hmt || [];
 
                   
                     <p class="article-more-link">
-                      <a class="article-more-a" href="/2022/02/09/pintos1/">
+                      <a class="article-more-a" href="/2022/02/09/pintos2/">
+                        展开全文 >>
+                      </a>
+                    </p>
+                    
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+  
+    <article id="post-pintos3"
+  class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/02/09/pintos3/">pintOS 探索之旅(3) project1编译和调试</a>
+    </h1>
+  
+
+          
+            <a href="/2022/02/09/pintos3/" class="archive-article-date">
+  	<time datetime="2022-02-09T14:52:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-09</time>
+</a>
+
+              <!-- 需要添加的位置 -->
+              <!-- 开始添加字数统计-->
+              
+                <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">427字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+
+                  
+                    <!-- 添加完成 -->
+
+                    
+
+                      <!-- 添加代码 -->
+                      
+                        
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+            <h3 id="编译-project1-threads"><a href="#编译-project1-threads" class="headerlink" title="编译 project1(threads)"></a>编译 <strong>project1(threads)</strong></h3><blockquote>
+<p>cd <strong>src&#x2F;threads&#x2F;</strong><br><strong>make</strong></p>
+</blockquote>
+              
+                <a class="article-more-a" href="/2022/02/09/pintos3/#more">
+                  more >>
+                </a>
+                
+                  
+
+                        
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pintOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+                
+
+                  
+                    <p class="article-more-link">
+                      <a class="article-more-a" href="/2022/02/09/pintos3/">
                         展开全文 >>
                       </a>
                     </p>
