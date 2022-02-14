@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>pintOS 之旅(4) 在潜入 pintOS 之前 | xy 的小博客</title>
+  <title>pintOS 之旅(5) 了解目标硬件 | xy 的小博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="x86 汇编语言看过 CS61C 的朋友应该已经很熟悉汇编语言了，但是 x86 汇编还有编程模型与 RISC-V 还是有明显区别的">
+  <meta name="description" content="Intel Architecture 32 英特尔32位架构（英语：Intel Architecture, 32-bit，缩写为IA-32），常被称为i386、x86-32或是x86，由英特尔公司推出的复杂指令集(CISC)架构，至今英特尔最受欢迎的处理器仍然采用此架构。它是x86架构的32位延伸版本，1985年首次应用在Intel 80386芯片中，用来取代之前的x86 16位架构（x86-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pintOS 之旅(4) 在潜入 pintOS 之前">
-<meta property="og:url" content="http://example.com/2022/02/13/pintos4/index.html">
+<meta property="og:title" content="pintOS 之旅(5) 了解目标硬件">
+<meta property="og:url" content="http://example.com/2022/02/14/Pintos5/index.html">
 <meta property="og:site_name" content="xy 的小博客">
-<meta property="og:description" content="x86 汇编语言看过 CS61C 的朋友应该已经很熟悉汇编语言了，但是 x86 汇编还有编程模型与 RISC-V 还是有明显区别的">
+<meta property="og:description" content="Intel Architecture 32 英特尔32位架构（英语：Intel Architecture, 32-bit，缩写为IA-32），常被称为i386、x86-32或是x86，由英特尔公司推出的复杂指令集(CISC)架构，至今英特尔最受欢迎的处理器仍然采用此架构。它是x86架构的32位延伸版本，1985年首次应用在Intel 80386芯片中，用来取代之前的x86 16位架构（x86-">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-12T16:53:05.000Z">
-<meta property="article:modified_time" content="2022-02-14T04:53:57.829Z">
+<meta property="article:published_time" content="2022-02-14T04:17:08.000Z">
+<meta property="article:modified_time" content="2022-02-14T05:05:31.369Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="xy 的小博客" type="application/atom+xml">
@@ -172,14 +172,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-pintos4" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Pintos5" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      pintOS 之旅(4) 在潜入 pintOS 之前
+      pintOS 之旅(5) 了解目标硬件
     </h1>
   
 
@@ -191,8 +191,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2022/02/13/pintos4/" class="archive-article-date">
-        <time datetime="2022-02-12T16:53:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-13</time>
+<a href="/2022/02/14/Pintos5/" class="archive-article-date">
+        <time datetime="2022-02-14T04:17:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-14</time>
 </a>
 
   
@@ -205,7 +205,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1k字</span>
+      <span class="post-count">734字</span>
     </span>
   </span>
 
@@ -214,7 +214,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">3分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -227,39 +227,46 @@
     
     <br>
 
-<h3 id="x86-汇编语言"><a href="#x86-汇编语言" class="headerlink" title="x86 汇编语言"></a><strong>x86</strong> 汇编语言</h3><p>看过 <strong>CS61C</strong> 的朋友应该已经很熟悉汇编语言了，但是 <strong>x86</strong> 汇编还有编程模型与 <strong>RISC-V</strong> 还是有明显区别的</p>
+<h3 id="Intel-Architecture-32"><a href="#Intel-Architecture-32" class="headerlink" title="Intel Architecture 32"></a><strong>Intel Architecture 32</strong></h3><blockquote>
+<p>英特尔32位架构（英语：<strong>Intel Architecture</strong>, <strong>32-bit</strong>，缩写为<strong>IA-32</strong>），常被称为<strong>i386</strong>、<strong>x86-32</strong>或是<strong>x86</strong>，由英特尔公司推出的复杂指令集(<strong>CISC</strong>)架构，至今英特尔最受欢迎的处理器仍然采用此架构。它是<strong>x86</strong>架构的32位延伸版本，1985年首次应用在<strong>Intel 80386</strong>芯片中，用来取代之前的<strong>x86 16</strong>位架构（<strong>x86-16</strong>），包括<strong>8086</strong>、<strong>80186</strong>与<strong>80286</strong>芯片。   – 百度百科</p>
+</blockquote>
 <span id="more"></span>
+<p><strong>80386</strong> 较原 <strong>8086</strong> 最大的区别就是从16位处理字长变成了32位的处理字长，寻址空间从可能的20位(分段的内存)，到32位(平铺的内存)，为了保持软件上的向后兼容性，<strong>ia32</strong> 沿用了段寄存器，但是也可以在初始化阶段将段地址都设为0，即平铺内存模式。 <strong>CPU</strong> 部分的 <strong>spec</strong> 还是非常复杂的，感兴趣的话详细内容见 <a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html"><strong>IA-32 Intel Architecture Software Developer’s Manual</strong></a><br><br></p>
+<h3 id="外围硬件"><a href="#外围硬件" class="headerlink" title="外围硬件"></a>外围硬件</h3><p>以下来自 <strong>pintOS</strong> 原文档，仅做分享<br><strong><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs140/projects/pintos/pintos_13.html#SEC169">https://web.stanford.edu/class/cs140/projects/pintos/pintos_13.html#SEC169</a></strong><br></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs140/projects/pintos/specs/freevga/home.htm"><strong>FreeVGA</strong></a> FreeVGA Project. Documents the VGA video hardware used in PCs.<br>用来驱动显示器的 <strong>VGA</strong> 接口</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs140/projects/pintos/specs/kbd/scancodes.html"><strong>kbd</strong></a> Keyboard scancodes. Documents PC keyboard interface.<br>用来驱动键盘，识别键盘的动作</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs140/projects/pintos/specs/ata-3-std.pdf"><strong>ATA-3</strong></a>. AT Attachment-3 Interface (ATA-3) Working Draft. Draft of an old version of the ATA aka IDE interface for the disks used in most desktop PCs.<br>看起来是用来驱动磁盘的(确信)</p>
+</blockquote>
+<blockquote>
+<p><a href="https_web.stanford.edu/?url=https://web.stanford.edu/class/cs140/projects/pintos/pintos_13.html#SEC169"><strong>PC16550D</strong></a>. National Semiconductor PC16550D Universal Asynchronous Receiver&#x2F;Transmitter with FIFOs. Datasheet for a chip used for PC serial ports.<br><strong>UART</strong> 芯片，用来添加串口功能(长叹一口气)</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs140/projects/pintos/specs/8254.pdf"><strong>8254</strong></a>. Intel 8254 Programmable Interval Timer. Datasheet for PC timer chip.<br>可编程的时间间断芯片，用来生成 <strong>systick</strong></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs140/projects/pintos/specs/8259A.pdf"><strong>8259A</strong></a>. Intel 8259A Programmable Interrupt Controller (8259A&#x2F;8259A-2). Datasheet for PC interrupt controller chip.<br>中断控制器，用来相应和绑定以上外设发出的中断</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs140/projects/pintos/specs/mc146818a.pdf"><strong>MC146818A</strong></a>. Motorola MC146818A Real Time Clock Plus Ram (RTC). Datasheet for PC real-time clock chip.<br>RTC 实时时钟芯片，严格每 <strong>1s</strong> 产生一次中断，一般用于记录时间。听说一个1980年的老 <strong>IBM</strong> 电脑在2020年开机后依然显示时间为当前时间，偏差不超过 <strong>30s</strong>，应该就是这个芯片的功劳了</p>
+</blockquote>
+<br>
 
-<p><strong>x86寄存器</strong></p>
-<p><strong>unsaved</strong> <strong>GP</strong> 寄存器:</p>
-<blockquote>
-<p><strong>eax  (ah,al)</strong></p>
-<p><strong>ecx  (ch,cl)</strong></p>
-<p><strong>edx  (dh,dl)</strong></p>
-<p><strong>esi</strong> (<strong>extended source indicator</strong>)</p>
-<p><strong>edi</strong> (<strong>extended destination indicator</strong>)</p>
-</blockquote>
-<p><strong>saved</strong> <strong>GP</strong> 寄存器</p>
-<blockquote>
-<p><strong>ebx  (bh,bl)</strong></p>
-<p><strong>ebp</strong>  (<strong>extended base pointer</strong>)</p>
-</blockquote>
-<p>特殊寄存器</p>
-<blockquote>
-<p><strong>esp</strong>  (<strong>extended stack pointer</strong>)</p>
-<p>段寄存器   <strong>(cs,ds,ss,es)</strong></p>
-</blockquote>
-<p>其中，<strong>esp</strong> 寄存器存放堆栈指针，对应 <strong>risc-v</strong> 中的 <strong>sp</strong> 寄存器<br><strong>x86</strong> 没有返回值寄存器，返回地址存在堆栈中<br>段寄存器用来存放段地址，在 <strong>8086</strong> 寻址时常用，用来扩大寻址范围，但是在 <strong>ia32</strong> 之后内存基本上为平铺，不用考虑段地址</p>
-<h3 id="调用规范"><a href="#调用规范" class="headerlink" title="调用规范"></a>调用规范</h3><p>当汇编语言需要调用子程序时，调用规范就显得很重要了，特别当汇编语言和其他高级语言进行混编的时候，需要特别指明汇编程序的调用规范</p>
-<p><strong>STD CALL</strong><br>当程序员要调用子函数时，会将子程序的参数，从右至左依次入栈，然后将返回地址入栈，返回地址为调用地址 <strong>+</strong> 一个  <strong>word</strong>。<strong>std</strong> 调用规范要求子程序编写者维护调用时的堆栈，如果子程序有三个参数，调用者将三个参数依次入栈，那么要求编写者在完成子函数后将堆栈指针向上移动三个 <strong>word</strong>，然后返回。</p>
-<p><strong>C</strong><br><strong>C</strong> 调用规范和 <strong>STD</strong> 规范不同的是，<strong>C</strong> 子程序的调用者必须自己维护堆栈，比如子程序有三个参数，子程序调用者将三个参数依次入栈，然后将返回值入栈。子函数不会改变调用者的堆栈，当结束运行子函数后仅仅会返回到调用地址 <strong>+</strong> 一个 <strong>word</strong>，<strong>C</strong> 子程序的调用者必须自己将堆栈指针 <strong>+</strong> 三个 <strong>word</strong>. <strong>C</strong>调用规范的优点在于，调用者不规定参数的数量，即参数可以是任意多个，给 <strong>printf</strong> 这样的函数提供了便利。<strong>C</strong> 调用规范的缺点也很明显，用户很容易把堆栈搞砸。</p>
-<h3 id="栈帧（stack-frame"><a href="#栈帧（stack-frame" class="headerlink" title="栈帧（stack frame)"></a>栈帧（<strong>stack frame</strong>)</h3><p>当我们运行程序时，为了可以让不同的子程序互相使用寄存器资源，我们将调用者的资源入栈。为了追踪程序运行的方向，当我们调用子程序时，会将返回地址入栈。每一个子程序所涉及的堆栈叫做一个栈帧，栈帧记录了我们函数调用的过程，比如我们依次在 <strong>main</strong> 中调用了 <strong>func1</strong>，在 <strong>func1</strong> 中调用了 <strong>func2</strong>，在 <strong>fun2</strong> 中调用了 <strong>func3</strong> 我们堆栈就会像这样。</p>
-<blockquote>
-<p><strong>…………</strong><br><strong>(paramters for main)</strong><br><strong>(main return address)</strong><br><strong>(main local variables)</strong>   <strong>——&gt;</strong> <strong>main stack frame</strong><br><strong>(paramaters for func1)</strong>  <strong>——&gt;</strong> <strong>main stack frame</strong><br><strong>(func1 return address)</strong> <strong>——&gt;</strong> <strong>main stack frame</strong><br><strong>(func1 local vaiables)</strong>   <strong>——&gt;</strong> <strong>func1 stack frame</strong><br><strong>(paramaters for func2)</strong>    <strong>——&gt;</strong> <strong>func1 stack frame</strong><br><strong>(func2 return address)</strong> <strong>——&gt;</strong> <strong>func1 stack frame</strong><br><strong>(func2 local variables)</strong>  <strong>——&gt;</strong> <strong>func2 stack frame</strong><br><strong>…………</strong></p>
-</blockquote>
-<p>当我们返回时，这个函数的 <strong>stack frame</strong> 就应该被丢掉，在 <strong>STD</strong> 调用规范中，子程序编写者会自动将堆栈指针恢复到调用处，但不会影响调用者的堆栈 <strong>比如调用的参数</strong> 。对于 <strong>C</strong> 调用规范来说，子函数会将自己的局部变量移除堆栈然后返回，至于调用参数移出堆栈就是调用者自己的责任了。</p>
-<h3 id="C-语言"><a href="#C-语言" class="headerlink" title="C 语言"></a><strong>C</strong> 语言</h3><p>如果你先了解 <strong>x86</strong> 汇编语言，然后再了解 <strong>C</strong> 语言，那么 <strong>C</strong> 语言基本上就是 <strong>x86</strong> 汇编语言的升级版，因为 <strong>x86</strong> 汇编语言的多样性，这两种语言几乎是一模一样。唯一的区别就是 <strong>C</strong> 语言会帮助你管理寄存器和堆栈，虽然是两个不同等级的语言，但是就语法和语义上来说，他们几乎是一对一的。</p>
-<p>如果你对 <strong>C</strong> 语言是如何翻译成 <strong>x86</strong> 汇编语言感兴趣的话，<strong>godbolt</strong> <strong>compiler explorer</strong> 也许可以帮到你。<br><strong><a target="_blank" rel="noopener" href="http://godbolt.org/">http://godbolt.org</a></strong></p>
+<h3 id="在虚拟机上运行"><a href="#在虚拟机上运行" class="headerlink" title="在虚拟机上运行"></a><strong>在虚拟机上运行</strong></h3><p><strong>pintOS</strong> 可以运行在 <strong>80386</strong> 上，我觉得可能是因为 <strong>80386</strong> 机器依然比较简单，如今的处理器应该会复杂的多。<strong>qemu</strong>（虚拟机）上集成了以上硬件，相比于在真实机器上运行，要来的抽象的多，我觉得实际上是给项目创造了更大的困难，但是现在估计也很难能找到 <strong>386</strong> 的电脑了……</p>
+<br>
+
+<h3 id="BIOS"><a href="#BIOS" class="headerlink" title="BIOS"></a>BIOS</h3><p><strong>BIOS</strong> 是硬件开发者给硬件写的一套软件接口，用来进行简单的外设初始化，比如键盘，和显示器。并且 <strong>BIOS</strong> 会把磁盘第一个扇区的可执行文件导入到内存也就是 <strong>boot loader</strong> ，然后就开始运行 <strong>boot loader</strong> 中的内容了。</p>
+<br>
+本文到此结束
+
+
+
+
+
 
     
 
@@ -284,18 +291,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2022/02/14/Pintos5/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          pintOS 之旅(5) 了解目标硬件
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/02/11/pintos3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">pintOS 探索之旅(3) project1编译和调试</div>
+    <a href="/2022/02/13/pintos4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">pintOS 之旅(4) 在潜入 pintOS 之前</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -322,7 +320,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">x86 汇编语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E8%A7%84%E8%8C%83"><span class="toc-number">2.</span> <span class="toc-text">调用规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7%EF%BC%88stack-frame"><span class="toc-number">3.</span> <span class="toc-text">栈帧（stack frame)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%AF%AD%E8%A8%80"><span class="toc-number">4.</span> <span class="toc-text">C 语言</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Intel-Architecture-32"><span class="toc-number">1.</span> <span class="toc-text">Intel Architecture 32</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E5%9B%B4%E7%A1%AC%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">外围硬件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8A%E8%BF%90%E8%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">在虚拟机上运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BIOS"><span class="toc-number">4.</span> <span class="toc-text">BIOS</span></a></li></ol>
                     </div>
                 </span>
             </div>
