@@ -18,7 +18,7 @@
 <meta property="og:description" content="thread_init()进入 C语言 之后，每一个进程都需要一个上下文，此时 main 函数应该就是我们 main thread 的上下文，也就是说我们已经在上下文之中了，此时需要做的就是将 main 函数封装在 thread 之中,thread_init 完成了以上任务">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-16T15:43:15.000Z">
-<meta property="article:modified_time" content="2022-02-16T16:40:14.546Z">
+<meta property="article:modified_time" content="2022-02-16T16:42:19.776Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="xy 的小博客" type="application/atom+xml">
@@ -215,7 +215,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">706字</span>
+      <span class="post-count">655字</span>
     </span>
   </span>
 
@@ -224,7 +224,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">3分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -246,7 +246,8 @@
 <p>在 <strong>thread</strong> 结构体中，需要存放 <strong>thread</strong> 的所有属性，其中最重要的是 <strong>tid</strong> <strong>stack</strong>  和 <strong>priority</strong> 分别是 <strong>thread ID</strong> <strong>堆栈指针</strong>和<strong>优先级</strong>，剩下的 <strong>allelem</strong> 和 <strong>elem</strong> 分别为 <strong>thead</strong> 的迭代器，为队列所使用。</p>
 <p>在 <strong>thread init</strong> 中，<strong>initial_thread</strong> 是一个 <strong>thread</strong> 的结构体指针<br><code>initial_thread = running_thread()</code> 初始化了 <strong>initial_thread</strong> 的位置，<code>running_thread()</code> 首先获取我们当前的堆栈指针，由于页面都是 <strong>4KB</strong> 大小，将堆栈指针除以 <strong>4KB</strong> 即可拿到页面首地址，<code>running_thread()</code>也差不多是这样做的，也就是说 <strong>initial thread</strong> 指向了当前页面的首地址，接下来我们看 <strong>init_thread()</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span></span></span><br><span class="line"><span class="function"><span class="title">init_thread</span><span class="params">(<span class="keyword">struct</span> thread *t, <span class="type">const</span> <span class="type">char</span> *name, <span class="type">int</span> priority)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">enum</span> <span class="title class_">intr_level</span> old_level;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">ASSERT</span>(t != <span class="literal">NULL</span>);</span><br><span class="line">  <span class="built_in">ASSERT</span>(PRI_MIN &lt;= priority &amp;&amp; priority &lt;= PRI_MAX);</span><br><span class="line">  <span class="built_in">ASSERT</span>(name != <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(t, <span class="number">0</span>, <span class="keyword">sizeof</span> *t);</span><br><span class="line">  t-&gt;status = THREAD_BLOCKED;</span><br><span class="line">  <span class="built_in">strlcpy</span>(t-&gt;name, name, <span class="keyword">sizeof</span> t-&gt;name);</span><br><span class="line">  t-&gt;stack = (<span class="type">uint8_t</span> *)t + PGSIZE;</span><br><span class="line">  t-&gt;priority = priority;</span><br><span class="line">  t-&gt;magic = THREAD_MAGIC;</span><br><span class="line"></span><br><span class="line">  old_level = <span class="built_in">intr_disable</span>();</span><br><span class="line">  <span class="built_in">list_push_back</span>(&amp;all_list, &amp;t-&gt;allelem);</span><br><span class="line">  <span class="built_in">intr_set_level</span>(old_level);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>init_thread()</strong> 除了将线程的属性初始化之外，还将 <strong>stack</strong> 指针指向了 <strong>t + PGSIZE</strong> 也就是当前线程的结构体地址 <strong>initial_thread</strong>，同时也是页面首地址。而<br><code>t-&gt;stack = t + PGSIZE</code> 说明 <strong>stack</strong> 指向了 页首地址 + 页长 也就是页底，那么 <strong>main thread</strong> 的页面的样子也差不多就确定了,<br>页首的位置 <strong>main thread</strong> 结构体，<strong>main thread</strong> 堆栈从页底向下扩展，如果 <strong>stack</strong> 地址等于页面的 <strong>magic number</strong> 之后，我们就可以轻松的判断 <strong>stack overflow</strong>了</p>
+
+<p><code>t-&gt;stack = t + PGSIZE</code> 将 <strong>stack</strong> 指向了 页首地址 + 页长 也就是页底，那么 <strong>main thread</strong> 的页面的样子也差不多就确定了,<br>页首的位置为 <strong>main thread</strong> 结构体，<strong>main thread</strong> 堆栈从页底向上扩展，如果 <strong>stack</strong> 地址等于页面的 <strong>magic number</strong> 之后，我们就可以判断 <strong>stack overflow</strong>了</p>
 <pre><code>    4 kB +---------------------------------+
          |          kernel stack           |  -------&gt; thread 堆栈
          |                |                |
