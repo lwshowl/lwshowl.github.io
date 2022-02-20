@@ -216,7 +216,7 @@
     
     <br>
 
-<h3 id="thread-init"><a href="#thread-init" class="headerlink" title="thread_init()"></a><strong>thread_init()</strong></h3><p>进入 <strong>C语言</strong> 之后，每一个进程都需要一个<strong>上下文</strong>，此时 <strong>main</strong> 函数应该就是我们 <strong>main thread</strong> 的上下文，也就是说我们已经在上下文之中了，此时需要做的就是将 <strong>main</strong> 函数封装在 <strong>thread</strong> 之中,<strong>thread_init</strong> 完成了以上任务</p>
+<h3 id="thread-init"><a href="#thread-init" class="headerlink" title="thread_init()"></a><strong>thread_init()</strong></h3><p>进入 <strong>C语言</strong> 之后，进程的每一个进程的<strong>上下文</strong>就是它的调用堆栈，此时 <strong>main</strong> 函数应该就是 <strong>main thread</strong> 的上下文，并且已经在上下文之中了，此时需要做的就是将 <strong>main</strong> 函数封装在 <strong>thread</strong> 之中,<strong>thread_init()</strong> 就是用来完成以上任务</p>
     
     <a class="article-more-a" href="/2022/02/16/pintos7/#more">more >></a>
     
