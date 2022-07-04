@@ -18,7 +18,7 @@
 <meta property="og:description" content="简介最近在一生一芯项目中完成了5级流水线的实现，因为已经非常了解教材上的5级流水线结构了，所以实现起来比较容易，不过有些概念又重新回到了视野中，就是指令依赖。虽然5级流水线中的指令依赖已经很成熟的被解决了，但是在一般体系结构设计中，依赖分析依然是进行设计的重要基础，这篇文章主要针对指令依赖进行一系列的讨论。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-04T01:05:33.000Z">
-<meta property="article:modified_time" content="2022-07-04T14:37:03.110Z">
+<meta property="article:modified_time" content="2022-07-04T14:44:26.150Z">
 <meta property="article:tag" content="体系结构">
 <meta property="article:tag" content="处理器设计">
 <meta name="twitter:card" content="summary">
@@ -217,7 +217,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.6k字</span>
+      <span class="post-count">1.9k字</span>
     </span>
   </span>
 
@@ -226,7 +226,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">5分</span>
+      <span class="post-count">6分</span>
     </span>
   </span>
 </div>
@@ -259,7 +259,7 @@
     主要指分支指令的源操作数依赖于前一条指令的执行结果。
 </code></pre>
 <p>OK，这看起来似乎和写后读依赖没有什么区别，而我个人也认为如此，至少站在依赖层面，这其中似乎没有任何出入，也许要感谢 MIPS 和 RISC-V 的指令集设计，使这些指令在数据流上面基本保持一致。(MIPS 通常被称为 Microprocessors without pipeline Interlocks，即没有内部互锁的流水线处理器)<br><br></p>
-<p>这看起来就是全部了，至少在执行指令时，我们已经满足了所有需要满足的条件，实际上在经典5级流水线中也确实如此 (在ysyx中解决了这两个依赖之后确实通过了 CPU-TEST)。<br><br>也许在处理器设计中还有其他的架构，会产生其他的依赖形式。但是只要原则上不生产依赖，实际上就没有依赖(:-&gt;)，也许花费太多时间来讨论学术上的术语，也许最终不会对我们有任何帮助，我想这里也可以很好的结束本文了。</p>
+<p>这看起来就是全部了，至少在执行指令时，我们已经满足了所有需要满足的条件，实际上在经典5级流水线中也确实如此 (在ysyx中解决了这两个依赖之后确实通过了 CPU-TEST)。如果一条一条的去翻RISC-V 指令集，会发现指令大多是这样的一个结构，一条指令要么是写了寄存器来改变程序状态，要么就是写了内存，或者是发生了分支来改变程序的状态。实际上前两者都可以归结于数据依赖，后者可以归结于控制依赖，依然感叹早在几十年前人们对处理器的研究就已经如此深刻，也许当时人们所碍于的只是工业上的滞后。在各种形式的课介绍从前计算机的发展时，可以明显感受到那是一个朝气蓬勃的年代，各种计算机百花齐放，不仅在性能方面，在各种研究方面也有许许多多的成果。也许给当初的人们今天的工业水平，也许可以达到如今人们难以想象的高度？（只是猜想)<br><br><br>最后，也许在处理器设计中还有其他的架构，也许会产生其他的各种各样的依赖形式。但是只要原则上不生产依赖，实际上就没有依赖(:-&gt;)，也许花费太多时间来讨论学术上的术语，也许最终不会对我们有任何帮助，也许有一天也会有这么一个实实在在的背景，可以介绍一下其他的依赖方式（也许就在不远的将来？）。OK，我想在这里也可以很好的结束本文了。</p>
 
     
 
