@@ -18,7 +18,7 @@
 <meta property="og:description" content="简介最近在一生一芯项目中完成了5级流水线的实现，因为已经非常了解教材上的5级流水线结构了，所以实现起来比较容易，不过有些概念又重新回到了视野中，就是指令依赖。虽然5级流水线中的指令依赖已经很成熟的被解决了，但是在一般体系结构设计中，依赖分析依然是进行设计的重要基础，这篇文章主要针对指令依赖进行一系列的讨论。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-04T01:05:33.000Z">
-<meta property="article:modified_time" content="2022-07-04T02:00:07.047Z">
+<meta property="article:modified_time" content="2022-07-04T14:37:03.110Z">
 <meta property="article:tag" content="体系结构">
 <meta property="article:tag" content="处理器设计">
 <meta name="twitter:card" content="summary">
@@ -217,7 +217,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">759字</span>
+      <span class="post-count">1.6k字</span>
     </span>
   </span>
 
@@ -226,7 +226,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">2分</span>
+      <span class="post-count">5分</span>
     </span>
   </span>
 </div>
@@ -249,6 +249,17 @@
 5. 每一个时钟周期都完成一条指令的执行(提交)。
 </code></pre>
 <p>仔细考虑一下，马上就发现了几个明显的问题。在传统意义的程序上，指令总是一条一条按顺序执行的，一条指令执行完毕，下一条指令才会执行。而在流水线架构下，指令虽然是一条条按顺序执行的，但是前一条指令还没有执行完成，下一条指令就被送入流水线执行了，这听起来是一个非常激进而且大胆的想法。当初我也非常震惊于此，这打破了传统编程定式，即在每一条指令执行时，之前的所有指令已经执行完毕。换言之，在每条指令执行时，程序先前的状态已经被确定。<br><br>一个非常直观的体现就是，如果下一条指令的源操作数是上一条指令的目的操作数，也就是下一条指令的运行依赖于上一条指令的结果。那么依赖于其他指令的指令应该如何执行？我想最大的疑问就是，它甚至是可以被执行的吗？讨论这个问题也就是讨论<strong>指令依赖</strong>。<br></p>
+<h3 id="依赖类型"><a href="#依赖类型" class="headerlink" title="依赖类型"></a>依赖类型</h3><pre><code>写后读依赖：
+    这是典型的数据依赖，即下一条指令的数据依赖于上一条指令的执行结果。
+</code></pre>
+<p>在5级流水线中因为指令都是按顺序进入流水线的，对于每一条指令而言，如果保证指令的源操作数正确，那么毫无疑问，本条指令被正确执行的条件就已经满足了。<br><br><br>但是如果一条条的来斟酌一个常用指令集架构，比如RISC-V x86 等，还有一类比较特殊的指令就是分支指令。 <br></p>
+<p>我还记得毕业设计一开始打算流水线x86的部分指令集，但是在绞尽脑汁，费尽心思考虑了将近一周后，我逐渐放弃了这个想法，因为 x86 指令集实在是太过于复杂，指令的源操作数大多都可以是内存里的内容，x86 也同时作为一个 destructive instuction set(毁灭指令集) ，基本上可以说难以下手。后来发现毕业时在室友手里淘来的《计算机组成与设计》，从这时候开始，我才第一次接触到 RISC 指令集。x86 的跳转模式比较简单，大多数在跳转之前使用比较指令 compare 或者 test 等可以设置处理器的内部状态，之后再根据这些状态跳转到相应的位置,BLE BGE ……。<br></p>
+<p><br> RISC 指令架构，比如MIPS 和 RISC-V ，两者基本上师出同门，则使用了完全不同的设计思想。首先分支指令不依靠处理器内部状态来实现，也就是说一条分支指令已经包含了分支的地址和分支的条件。所以在 MIPS 或者 RISC-V 中，要正确执行一条分支指令，只需知道指令的分支条件是否满足，还有正确的分支地址，这一类依赖通常被称为控制依赖。<br></p>
+<pre><code>控制依赖：
+    主要指分支指令的源操作数依赖于前一条指令的执行结果。
+</code></pre>
+<p>OK，这看起来似乎和写后读依赖没有什么区别，而我个人也认为如此，至少站在依赖层面，这其中似乎没有任何出入，也许要感谢 MIPS 和 RISC-V 的指令集设计，使这些指令在数据流上面基本保持一致。(MIPS 通常被称为 Microprocessors without pipeline Interlocks，即没有内部互锁的流水线处理器)<br><br></p>
+<p>这看起来就是全部了，至少在执行指令时，我们已经满足了所有需要满足的条件，实际上在经典5级流水线中也确实如此 (在ysyx中解决了这两个依赖之后确实通过了 CPU-TEST)。<br><br>也许在处理器设计中还有其他的架构，会产生其他的依赖形式。但是只要原则上不生产依赖，实际上就没有依赖(:-&gt;)，也许花费太多时间来讨论学术上的术语，也许最终不会对我们有任何帮助，我想这里也可以很好的结束本文了。</p>
 
     
 
@@ -317,7 +328,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E4%BE%9D%E8%B5%96%E4%BB%8E%E4%BD%95%E8%80%8C%E6%9D%A5"><span class="toc-number"></span> <span class="toc-text">指令依赖从何而来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">流水线架构</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E4%BE%9D%E8%B5%96%E4%BB%8E%E4%BD%95%E8%80%8C%E6%9D%A5"><span class="toc-number"></span> <span class="toc-text">指令依赖从何而来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">流水线架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">依赖类型</span></a></li></ol>
                     </div>
                 </span>
             </div>
