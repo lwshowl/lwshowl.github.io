@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>pintOS 探索之旅(2) 设置开发环境 | xy 的小博客</title>
+  <title>体系结构基础:指令依赖 | xy 的小博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="设置 WSLWSL 是 Windows Linux Subsystem 的简称，可以在 Windows 中运行 Linux 虚拟机。  打开 powershell  按下 Win + R 输入 PowerShell 后打开">
+  <meta name="description" content="简介最近在一生一芯项目中完成了5级流水线的实现，因为已经非常了解教材上的5级流水线结构了，所以在实现起来比较容易，不过有些概念只又重新回到了视野中，就是指令依赖。虽然5级流水线中的指令依赖已经非常成熟的被解决了，但是在一般体系结构设计中，依赖分析是数据通路和数据流设计的基础，这篇文章主要针对指令依赖进行一系列的讨论。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pintOS 探索之旅(2) 设置开发环境">
-<meta property="og:url" content="http://example.com/2022/02/10/pintos2/index.html">
+<meta property="og:title" content="体系结构基础:指令依赖">
+<meta property="og:url" content="http://example.com/2022/07/04/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E4%BE%9D%E8%B5%96/index.html">
 <meta property="og:site_name" content="xy 的小博客">
-<meta property="og:description" content="设置 WSLWSL 是 Windows Linux Subsystem 的简称，可以在 Windows 中运行 Linux 虚拟机。  打开 powershell  按下 Win + R 输入 PowerShell 后打开">
+<meta property="og:description" content="简介最近在一生一芯项目中完成了5级流水线的实现，因为已经非常了解教材上的5级流水线结构了，所以在实现起来比较容易，不过有些概念只又重新回到了视野中，就是指令依赖。虽然5级流水线中的指令依赖已经非常成熟的被解决了，但是在一般体系结构设计中，依赖分析是数据通路和数据流设计的基础，这篇文章主要针对指令依赖进行一系列的讨论。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-10T14:52:39.000Z">
-<meta property="article:modified_time" content="2022-02-14T04:54:10.539Z">
-<meta property="article:tag" content="pintOS">
-<meta property="article:tag" content="OS">
+<meta property="article:published_time" content="2022-07-04T01:05:33.000Z">
+<meta property="article:modified_time" content="2022-07-04T01:52:46.977Z">
+<meta property="article:tag" content="体系结构">
+<meta property="article:tag" content="处理器设计">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="xy 的小博客" type="application/atom+xml">
@@ -184,14 +184,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-pintos2" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-体系结构-指令依赖" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      pintOS 探索之旅(2) 设置开发环境
+      体系结构基础:指令依赖
     </h1>
   
 
@@ -203,8 +203,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2022/02/10/pintos2/" class="archive-article-date">
-        <time datetime="2022-02-10T14:52:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-10</time>
+<a href="/2022/07/04/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E4%BE%9D%E8%B5%96/" class="archive-article-date">
+        <time datetime="2022-07-04T01:05:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-04</time>
 </a>
 
   
@@ -217,7 +217,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">330字</span>
+      <span class="post-count">745字</span>
     </span>
   </span>
 
@@ -226,7 +226,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -239,53 +239,16 @@
     
     <br>
 
-<h3 id="设置-WSL"><a href="#设置-WSL" class="headerlink" title="设置 WSL"></a><strong>设置 WSL</strong></h3><p><strong>WSL</strong> 是 <strong>Windows</strong> <strong>Linux</strong> <strong>Subsystem</strong> 的简称，可以在 <strong>Windows</strong> 中运行 <strong>Linux</strong> 虚拟机。</p>
-<ol>
-<li>打开 <strong>powershell</strong><blockquote>
-<p> 按下 <strong>Win + R</strong> 输入 <strong>PowerShell</strong> 后打开</p>
-</blockquote>
-<span id="more"></span></li>
-<li>安装 <strong>wsl</strong><blockquote>
-<p>输入 <strong>winget</strong> <strong>install</strong> <strong>wsl</strong></p>
-</blockquote>
-</li>
-<li>下载 <strong>wsl</strong> 发行版<blockquote>
-<p>在微软商店里面搜索 <strong>ubuntu</strong> 或者任何你喜欢的 <strong>linux</strong> 发行版，并下载安装</p>
-</blockquote>
-</li>
-<li>启用虚拟机服务<blockquote>
-<p>启用 <strong>wsl</strong> 在 <strong>powershell</strong> 中输入 <strong>dism.exe &#x2F;online &#x2F;enable-feature &#x2F;featurename:VirtualMachinePlatform &#x2F;all &#x2F;norestart</strong></p>
-</blockquote>
-</li>
-<li>重启<blockquote>
-<p><strong>system-reboot</strong></p>
-</blockquote>
-</li>
-</ol>
-<p>重启之后重新在 <strong>powershell</strong> 中输入 <strong>wsl ~</strong> ，设置用户名和密码之后 ，就可以进入 <strong>linux</strong> 的用户主目录了，我安装的是 <strong>ubuntu</strong></p>
-<h3 id="拉取-CSCC69-Pintos-仓库"><a href="#拉取-CSCC69-Pintos-仓库" class="headerlink" title="拉取 CSCC69-Pintos 仓库"></a>拉取 <strong>CSCC69-Pintos</strong> 仓库</h3><p>pintOS目前的升级版有很多，<a target="_blank" rel="noopener" href="https://github.com/ThierrySans/CSCC69-Pintos"><strong>CSCC69-Pintos</strong></a> 是 <strong>CSCC69</strong> 课程所使用的仓库，并且最近仍在使用，推介使用</p>
-<ol>
-<li>安装 <strong>git</strong><blockquote>
-<p><strong>sudo apt-get install git</strong></p>
-</blockquote>
-</li>
-<li>拉取 <strong>repo</strong><blockquote>
-<p><strong>git clone <a target="_blank" rel="noopener" href="https://github.com/ThierrySans/CSCC69-Pintos.git">https://github.com/ThierrySans/CSCC69-Pintos.git</a></strong></p>
-</blockquote>
-</li>
-<li>安装 <strong>qemu</strong> <strong>gdb</strong> (非必须)<blockquote>
-<p><strong>sudo apt-get install qemu</strong><br>安装之后查看是否有 <strong>qemu-system-i386</strong><br><strong>sudo apt-get install gdb</strong></p>
-</blockquote>
-</li>
-</ol>
-<h3 id="编译-pintOS-工具-Bochs"><a href="#编译-pintOS-工具-Bochs" class="headerlink" title="编译 pintOS 工具(Bochs)"></a>编译 pintOS 工具(<strong>Bochs</strong>)</h3><p><strong>Bochs</strong> 不知道是用来干嘛的，官方文档明确指明如果使用 <strong>qemu</strong> ，则不需要编译 <strong>bochs</strong>，编译的话在 <strong>&#x2F;src&#x2F;utils</strong> 中 <strong>make</strong> 即可</p>
-<blockquote>
-<p><strong>cd src&#x2F;utils</strong><br><strong>make</strong></p>
-</blockquote>
-<h3 id="添加-pintOS-工具到-PATH"><a href="#添加-pintOS-工具到-PATH" class="headerlink" title="添加 pintOS 工具到 PATH"></a>添加 <strong>pintOS</strong> 工具到 <strong>PATH</strong></h3><blockquote>
-<p><strong>export</strong> <strong>PATH&#x3D;你的pintos上级目录&#x2F;src&#x2F;utils:$PATH</strong><br>添加到 <strong>bashrc</strong> (可选)</p>
-</blockquote>
-<p><strong>pintOS</strong> 的环境安装就到此结束了……</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a><strong>简介</strong></h3><p>最近在一生一芯项目中完成了5级流水线的实现，因为已经非常了解教材上的5级流水线结构了，所以在实现起来比较容易，不过有些概念只又重新回到了视野中，就是指令依赖。虽然5级流水线中的指令依赖已经非常成熟的被解决了，但是在一般体系结构设计中，依赖分析是数据通路和数据流设计的基础，这篇文章主要针对指令依赖进行一系列的讨论。</p>
+<span id="more"></span>
+<h2 id="指令依赖从何而来"><a href="#指令依赖从何而来" class="headerlink" title="指令依赖从何而来"></a><strong>指令依赖从何而来</strong></h2><h3 id="流水线架构"><a href="#流水线架构" class="headerlink" title="流水线架构"></a>流水线架构</h3><p>流水线的方式听起来很简单明了，第一次在计算机组成原理课程上了解流水线体系结构时，我是这么认为的。各个组件负责各个不同的功能，似乎只是对计算机内部进行了协调，但这明显是对流水线架构的错误理解。<br><br>在大四做毕业设计时，我选择实现一个5级流水线的MIPS处理器，在当时我依然对流水线一无所知，现在想起来似乎有些唐突，建议在决定做什么事情之前先把的基本理念搞懂 -&gt;_ -&gt;.<br><br>实际上，计算机的流水线的目标为</p>
+<pre><code>1. 每一条指令都经过几个不同的，但是确定的阶段。
+2. 这些阶段在时间上按先后顺序进行。
+3. 每个时钟周期都有一条指令进入流水线。
+4. 尽可能的在每一个时钟周期都将冯诺依曼架构下的各个部件利用起来。
+5. 每一个时钟周期都执行一条指令。
+</code></pre>
+<p>仔细考虑一下，马上就发现了几个明显的问题。在传统意义的程序上，指令总是一条一条按顺序执行的，一条指令执行完毕，下一条指令才会执行。而在流水线架构下，指令虽然是一条条按顺序执行的，但是前一条指令还没有执行完成，下一条指令就被送入流水线执行了，这听起来是一个非常激进而且大胆的想法。当初我也非常震惊于此，这打破了传统编程定式，即在每一条指令执行时，之前的所有指令已经执行完毕。换言之，在每条指令执行时，程序先前的状态已经被确定。<br><br>一个非常直观的体现就是，如果下一条指令的源操作数是上一条指令的目的操作数，也就是下一条指令的运行依赖于上一条指令的结果。那么依赖于其他指令的指令应该如何执行？我想最大的疑问就是，它甚至是可以被执行的吗？讨论这个问题也就是讨论<strong>指令依赖</strong>。<br></p>
 
     
 
@@ -302,11 +265,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pintOS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">体系结构</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">处理器设计</a>
         		</li>
       		
 		</ul>
@@ -325,18 +288,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2022/02/11/pintos3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          pintOS 探索之旅(3) project1编译和调试
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/02/09/pintos/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">一个萌新的 pintOS 探索之旅</div>
+    <a href="/2022/02/16/pintos7/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">pintOS 探索之旅(7) main thread</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -363,7 +317,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE-WSL"><span class="toc-number">1.</span> <span class="toc-text">设置 WSL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%89%E5%8F%96-CSCC69-Pintos-%E4%BB%93%E5%BA%93"><span class="toc-number">2.</span> <span class="toc-text">拉取 CSCC69-Pintos 仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-pintOS-%E5%B7%A5%E5%85%B7-Bochs"><span class="toc-number">3.</span> <span class="toc-text">编译 pintOS 工具(Bochs)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0-pintOS-%E5%B7%A5%E5%85%B7%E5%88%B0-PATH"><span class="toc-number">4.</span> <span class="toc-text">添加 pintOS 工具到 PATH</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E4%BE%9D%E8%B5%96%E4%BB%8E%E4%BD%95%E8%80%8C%E6%9D%A5"><span class="toc-number"></span> <span class="toc-text">指令依赖从何而来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">流水线架构</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -395,7 +349,7 @@ if(true){
   	repo: 'lwshowl.github.io',
   	owner: 'lwshowl',
   	admin: ['lwshowl'],
-  	id: 'Thu Feb 10 2022 22:52:39 GMT+0800',
+  	id: 'Mon Jul 04 2022 09:05:33 GMT+0800',
   	distractionFreeMode: 'true'
 })
 gitalk.render('gitalk-container') 
